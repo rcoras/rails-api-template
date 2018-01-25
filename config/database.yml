@@ -1,4 +1,4 @@
-<% project_name = 'rails-api-template-practice' %>
+<% project_name = 'fishing-api' %>
 
 default: &default
   adapter: postgresql
