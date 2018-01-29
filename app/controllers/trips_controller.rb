@@ -1,5 +1,5 @@
 class TripsController < OpenReadController
-  before_action :set_trip, only: %i[:update, :destroy]
+  before_action :set_trip, only: %i[show update destroy]
 
   # GET /trips
   def index
@@ -35,11 +35,16 @@ class TripsController < OpenReadController
 
   # DELETE /trips/1
   def destroy
+    # binding.pry
+
     @trip.destroy
+
+    head :no_content
   end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_trip
+      # binding.pry
       @trip = current_user.trips.find(params[:id])
     end
 
