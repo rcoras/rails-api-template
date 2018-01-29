@@ -1,5 +1,5 @@
-class TripsController < ApplicationController
-  before_action :set_trip, only: [:show, :update, :destroy]
+class TripsController < OpenReadController
+  before_action :set_trip, only: %i[:update, :destroy]
 
   # GET /trips
   def index
@@ -10,12 +10,12 @@ class TripsController < ApplicationController
 
   # GET /trips/1
   def show
-    render json: @trip
+    render json: Trip.find(params[:id])
   end
 
   # POST /trips
   def create
-    @trip = Trip.new(trip_params)
+    @trip = current_user.trips.build(trip_params)
 
     if @trip.save
       render json: @trip, status: :created, location: @trip
@@ -38,14 +38,15 @@ class TripsController < ApplicationController
     @trip.destroy
   end
 
-  private
     # Use callbacks to share common setup or constraints between actions.
     def set_trip
-      @trip = Trip.find(params[:id])
+      @trip = current_user.trips.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def trip_params
-      params.require(:trip).permit(:trip_date, :trip_length_hrs, :location, :no_of_fish_caught, :comments, :user_id)
+      params.require(:trip).permit(:trip_date, :trip_length_hrs, :location, :no_of_fish_caught, :comments)
     end
+
+    private :set_trip, :trip_params
 end

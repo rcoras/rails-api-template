@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# EMAIL=ieie PASSWORD=12qwe sh
 curl "http://localhost:4741/sign-up" \
   --include \
   --request POST \
